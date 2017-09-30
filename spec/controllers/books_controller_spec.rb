@@ -28,13 +28,11 @@ RSpec.describe BooksController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Book. As you add validations to Book, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:author) { Author.create!( name: "Author" ) }
+  let(:valid_attributes) { { title: "A title", pages: 123, author: author } }
+  let(:valid_post_attributes) { { title: "A title", pages: 123, author_id: author } }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) { { title: nil, pages: 0, author: nil } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -76,12 +74,12 @@ RSpec.describe BooksController, type: :controller do
     context "with valid params" do
       it "creates a new Book" do
         expect {
-          post :create, params: {book: valid_attributes}, session: valid_session
+          post :create, params: {book: valid_post_attributes}, session: valid_session
         }.to change(Book, :count).by(1)
       end
 
       it "redirects to the created book" do
-        post :create, params: {book: valid_attributes}, session: valid_session
+        post :create, params: {book: valid_post_attributes}, session: valid_session
         expect(response).to redirect_to(Book.last)
       end
     end
@@ -96,15 +94,13 @@ RSpec.describe BooksController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) { { pages: 666 } }
 
       it "updates the requested book" do
         book = Book.create! valid_attributes
         put :update, params: {id: book.to_param, book: new_attributes}, session: valid_session
         book.reload
-        skip("Add assertions for updated state")
+        expect(book.pages).to be_eql(666)
       end
 
       it "redirects to the book" do
