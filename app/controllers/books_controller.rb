@@ -61,6 +61,11 @@ class BooksController < ApplicationController
     end
   end
 
+  def avg_page_count
+    collection = params[:author_id] ? Book.where(author: params[:author_id]): Book.all
+    render plain: LibraryStats.new.avg_page_count(collection)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
