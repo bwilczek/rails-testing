@@ -61,9 +61,11 @@ class BooksController < ApplicationController
     end
   end
 
+  # GET /books/avg_page_count
+  # GET /books/avg_page_count/1
   def avg_page_count
     collection = params[:author_id] ? Book.where(author: params[:author_id]) : Book.all
-    render plain: LibraryStats.new.avg_page_count(collection)
+    render plain: LibraryStats.avg_page_count(collection)
   end
 
   private
