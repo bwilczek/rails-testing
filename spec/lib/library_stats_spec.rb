@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe LibraryStats do
-  it 'average for one entry from FactoryGirl' do
+  it 'average for one entry from FactoryBot' do
     book = build(:book, pages: 300)
     avg = LibraryStats.avg_page_count(Array(book))
     expect(avg).to be_eql(300.0)
   end
 
-  it 'average for two entries from FactoryGirl' do
+  it 'average for two entries from FactoryBot' do
     book1 = build(:book, pages: 100)
     book2 = build(:book, pages: 300)
     avg = LibraryStats.avg_page_count([book1, book2])
